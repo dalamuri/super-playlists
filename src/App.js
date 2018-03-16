@@ -58,7 +58,6 @@ class App extends Component {
           <Playlists/>
           <Playlists/>
           <Playlists/>
-          <Playlists/>
           
         </header>
         <p style={textcolor} className="App-intro">
