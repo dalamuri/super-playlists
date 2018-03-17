@@ -49,6 +49,9 @@ let fakeServerData = {
 
 }
 
+
+
+
 class PlaylistCounter extends Component{
   render() {
     return(
@@ -100,7 +103,7 @@ class Filter extends Component{
 class Playlists extends Component{
   render() {
     return(
-      <div style={{textcolor, width:"10%", display:"inline-block"}} ><img />      
+      <div style={{textcolor, width:"20%", display:"inline-block"}} ><img />      
       <h3>{this.props.playlist.name}</h3>
       <ul>
         {this.props.playlist.songs.map(song =>
@@ -112,16 +115,20 @@ class Playlists extends Component{
   }
 }
 
+
 class App extends Component {
   constructor() {
     super();
-    this.state = {serverData: {}}
+    this.state = {serverData: {},
+  filterString: ''}
 
   }
 
   componentDidMount() {
     setTimeout(()=> {this.setState({serverData: fakeServerData});
   }, 2000);
+  setTimeout(()=> {this.setState({filterString: '1'});
+}, 2000);
   }
   
   render() {
@@ -129,6 +136,8 @@ class App extends Component {
     let headerStyle= {color: 'skyblue'}
     return (
       <div className="App">
+      <header className="App-header">
+       <img src={logo} className="App-logo" alt="logo" />
           {
           this.state.serverData.user ?
           <div>
@@ -138,32 +147,34 @@ class App extends Component {
           </h1>
           <PlaylistCounter playlists={this.state.serverData.user.playlists}/>
           <HoursCounter playlists={this.state.serverData.user.playlists}/>
-          
-          
-        
-         
+           
 
           <Filter/>
           {
 
-            this.state.serverData.user.playlists.map(playlist => 
+            this.state.serverData.user.playlists.filter(
+              playlist=> playlist.name.includes(this.state.filterString)
+            )
+            .map(playlist => 
                 <Playlists playlist={playlist}/>
             
             
           )}
+           
+        <p style={textcolor} className="App-intro">
+          To get started, edit <code>src/App.js</code> and save to reload.
+        </p>
 
           
           </div> : <h1>Loading...</h1>
           }
+          </header>
     </div> 
     );
     }
   }
 
-        
-        <p style={textcolor} className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+       
         
 
 export default App;
