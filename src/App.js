@@ -93,7 +93,8 @@ class Filter extends Component{
     return(
       <div style={{width: "100%"}}>
         <img/>
-        <label style={textcolor}>Filter: </label><input type="text"/>
+        <label style={textcolor}>Filter: </label><input type="text" onKeyUp={event => 
+          this.props.onTextChange(event.target.value)}/>
       </div>
     );
 
@@ -126,8 +127,8 @@ class App extends Component {
 
   componentDidMount() {
     setTimeout(()=> {this.setState({serverData: fakeServerData});
-  }, 2000);
-  setTimeout(()=> {this.setState({filterString: '1'});
+  }, 1000);
+  setTimeout(()=> {this.setState({filterString: ''});
 }, 2000);
   }
   
@@ -149,13 +150,14 @@ class App extends Component {
           <HoursCounter playlists={this.state.serverData.user.playlists}/>
            
 
-          <Filter/>
+          <Filter onTextChange = {text => this.setState({filterString: text})}/>
           {
 
             this.state.serverData.user.playlists.filter(
               playlist=> playlist.name.includes(this.state.filterString)
             )
             .map(playlist => 
+
                 <Playlists playlist={playlist}/>
             
             
